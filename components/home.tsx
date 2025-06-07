@@ -13,6 +13,7 @@ export default function Hero({ landingPageData }: { landingPageData: LandingPage
   }
 
   const backgroundImage = landingPageData.landing_page_background_image as any
+  console.log(backgroundImage)
 
   return (
     <>
