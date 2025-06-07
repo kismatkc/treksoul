@@ -4,7 +4,8 @@
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {
-  --radius-sm: calc(var(--radius) - 4px);
+  --font-sans: var(--font-montserrat), ui-sans-serif, system-ui, sans-serif;
+
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
   --radius-xl: calc(var(--radius) + 4px);
@@ -111,10 +112,13 @@
 }
 
 @layer base {
+  html {
+    @apply scroll-smooth text-base antialiased;
+  }
   * {
     @apply border-border outline-ring/50;
   }
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground font-sans;
   }
 }

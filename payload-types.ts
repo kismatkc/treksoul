@@ -84,8 +84,14 @@ export interface Config {
   db: {
     defaultIDType: string;
   };
-  globals: {};
-  globalsSelect: {};
+  globals: {
+    header: Header;
+    landing_page: LandingPage;
+  };
+  globalsSelect: {
+    header: HeaderSelect<false> | HeaderSelect<true>;
+    landing_page: LandingPageSelect<false> | LandingPageSelect<true>;
+  };
   locale: null;
   user: User & {
     collection: 'users';
@@ -270,6 +276,104 @@ export interface PayloadMigrationsSelect<T extends boolean = true> {
   batch?: T;
   updatedAt?: T;
   createdAt?: T;
+}
+/**
+ * Configure the header settings for your site.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "header".
+ */
+export interface Header {
+  id: string;
+  /**
+   * Upload your logo here. It will be displayed in the header.
+   */
+  logo: string | Media;
+  /**
+   * Text for the "Book Now" button in the header.
+   */
+  Book_now_button_text: string;
+  /**
+   * Color for the "Book Now" button in the header.Hex code/rgb value/color name
+   */
+  Book_now_button_color: string;
+  /**
+   * Add navigation links for the header. Each link should have a label and a URL.
+   */
+  navigation_links?:
+    | {
+        /**
+         * Text for the navigation link.
+         */
+        label: string;
+        /**
+         * URL for the navigation link. Use absolute URLs or relative paths.
+         */
+        section_id: 'home' | 'about' | 'contact' | 'treks';
+        id?: string | null;
+      }[]
+    | null;
+  /**
+   * Color for the navigation links when hovered over. Use hex code/rgb value/color name.
+   */
+  Navigation_links_hover_color?: string | null;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * Configure the Landing page settings for your site.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "landing_page".
+ */
+export interface LandingPage {
+  id: string;
+  /**
+   * Upload the background image for the landing page.
+   */
+  landing_page_background_image: string | Media;
+  /**
+   * Heading for the search bar in the header.
+   */
+  Search_bar_heading?: string | null;
+  /**
+   * Searchbar placeholder.
+   */
+  Search_bar_placeholder?: string | null;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "header_select".
+ */
+export interface HeaderSelect<T extends boolean = true> {
+  logo?: T;
+  Book_now_button_text?: T;
+  Book_now_button_color?: T;
+  navigation_links?:
+    | T
+    | {
+        label?: T;
+        section_id?: T;
+        id?: T;
+      };
+  Navigation_links_hover_color?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "landing_page_select".
+ */
+export interface LandingPageSelect<T extends boolean = true> {
+  landing_page_background_image?: T;
+  Search_bar_heading?: T;
+  Search_bar_placeholder?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
