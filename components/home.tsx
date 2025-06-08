@@ -9,19 +9,16 @@ import { LandingPage } from '@/payload-types'
 export default function Hero({ landingPageData }: { landingPageData: LandingPage }) {
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault()
-    // TODO: grab the input value and trigger your search
   }
 
   const backgroundImage = landingPageData.landing_page_background_image as any
-  console.log(backgroundImage)
 
   return (
     <>
-      {/* ---------- HERO ---------- */}
       <section
         id="home"
         className="
-          relative h-[80vh] w-screen overflow-hidden
+          relative h-screen w-screen overflow-hidden pr-4
           [clip-path:url('#wave-clip')]
         "
       >
@@ -37,13 +34,13 @@ export default function Hero({ landingPageData }: { landingPageData: LandingPage
           }}
         />
 
-        {/* <TrekSearchCard /> */}
         <div
           className="
-        relative z-[51] mt-36 mx-4
+        relative z-[51] mt-36 mx-4 
         rounded-[32px] px-6 py-10
         bg-gradient-to-br from-emerald-700/90 to-teal-600/90
         backdrop-blur-sm
+        
       "
         >
           <h2 className="text-white text-2xl font-extrabold leading-tight">

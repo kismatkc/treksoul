@@ -4,10 +4,11 @@ import { PrevButton, NextButton, usePrevNextButtons } from './EmblaCarouselArrow
 import Autoplay from 'embla-carousel-autoplay'
 import useEmblaCarousel from 'embla-carousel-react'
 import TrekCard from './trek-card'
+import { Trek } from '@/payload-types'
 
 type PropType = {
-  slides: number[]
   options?: EmblaOptionsType
+  treks: Trek[]
 }
 
 const autoplayConfig = Autoplay({
@@ -16,7 +17,7 @@ const autoplayConfig = Autoplay({
 })
 
 const EmblaCarousel: React.FC<PropType> = (props) => {
-  const { slides, options } = props
+  const { options, treks } = props
   const [emblaRef, emblaApi] = useEmblaCarousel(options, [autoplayConfig])
 
   const onNavButtonClick = useCallback((emblaApi: EmblaCarouselType) => {
@@ -36,16 +37,17 @@ const EmblaCarousel: React.FC<PropType> = (props) => {
     <section className="embla">
       <div className="embla__viewport" ref={emblaRef}>
         <div className="embla__container">
-          {slides.map((index) => (
+          {treks.map((trek, index) => (
             <div className="embla__slide" key={index}>
-              <TrekCard />
+              {/* dont use priority true flag it will bypass the lazy loading,optimization techniques only use it for hero images and images hwere i nedd it faster ratehr than optimizaed  */}
+              <TrekCard trek={trek} />
             </div>
           ))}
         </div>
       </div>
 
       <div className="embla__controls">
-        <div className="embla__buttons">
+        <div className="embla__buttons " style={{ opacity: treks.length > 1 ? 1 : 0 }}>
           <PrevButton onClick={onPrevButtonClick} disabled={prevBtnDisabled} />
           <NextButton onClick={onNextButtonClick} disabled={nextBtnDisabled} />
         </div>

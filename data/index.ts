@@ -1,26 +1,20 @@
-import { Trek } from '../types';
-
-export const TREKS: Trek[] = [
+export const TREKS: any[] = [
   {
     id: 'everest-base-camp-12-days',
     name: 'Everest Base Camp',
     heroImage: '/images/treks/everest-base-camp/cover.jpg',
-    price: 185000,          // NPR
+    price: 185000,
     currency: 'NPR',
     durationDays: 12,
     summary:
-      'Legendary hike through Sherpa hamlets and icy valleys to stand at Everest Base Camp (5 364 m).',
-    highlights: [
-      '12 d / 130 km',      // duration + total length
-      'Sherpa culture',
-      'Kala Patthar view',
-    ],
+      'Legendary hike through Sherpa hamlets and icy valleys to stand at Everest Base Camp (5 364 m).',
+    highlights: ['12 d / 130 km', 'Sherpa culture', 'Kala Patthar view'],
     included: [
-      'Kathmandu‑Lukla flights',
+      'Kathmandu–Lukla flights',
       'Sagarmatha NP + TIMS permits',
       'Guide + porter (1:2)',
-      'Tea‑house lodging, all meals',
-      'Group first‑aid kit',
+      'Tea-house lodging, all meals',
+      'Group first-aid kit',
     ],
   },
   {
@@ -31,18 +25,14 @@ export const TREKS: Trek[] = [
     currency: 'NPR',
     durationDays: 12,
     summary:
-      'Circle the Annapurna Massif, crossing Thorong La Pass (5 416 m) amid dramatic terrain shifts.',
-    highlights: [
-      '12 d / 145 km',
-      'Thorong La pass',
-      'Hot springs finale',
-    ],
+      'Circle the Annapurna Massif, crossing Thorong La Pass (5 416 m) amid dramatic terrain shifts.',
+    highlights: ['12 d / 145 km', 'Thorong La pass', 'Hot springs finale'],
     included: [
       'ACAP & TIMS permits',
       'Local transport (bus/jeep)',
-      'Guide + porter',
-      'Tea‑house board',
-      'Emergency sat‑phone',
+      'Licensed guide + porter',
+      'Twin-share tea-house board',
+      'Emergency sat-phone',
     ],
   },
   {
@@ -53,18 +43,14 @@ export const TREKS: Trek[] = [
     currency: 'NPR',
     durationDays: 8,
     summary:
-      'Quick escape north of Kathmandu to glacier‑carved valleys, yak pastures and Kyanjin Ri vistas.',
-    highlights: [
-      '8 d / 65 km',
-      'Tamang villages',
-      'Yak cheese stop',
-    ],
+      'Quick escape north of Kathmandu to glacier-carved valleys, yak pastures and Kyanjin Ri vistas.',
+    highlights: ['8 d / 65 km', 'Tamang villages', 'Yak cheese stop'],
     included: [
       'Langtang NP permit',
       'Shared jeep transport',
       'Licensed guide',
-      'Tea‑house board',
-      'Basic first‑aid kit',
+      'Twin-share tea-house board',
+      'Basic first-aid kit',
     ],
   },
-];
+]

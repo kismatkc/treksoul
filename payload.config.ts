@@ -9,15 +9,17 @@ import sharp from 'sharp'
 import { s3Storage } from '@payloadcms/storage-s3' // ✅ named export
 
 import { Users } from './collections/Users'
+
+import TreksCollectionConfig from './collections/Treks'
+
+import HeaderGlobalConfig from './globals/Header'
+import LandingGlobalPageConfig from './globals/Landing-page'
+import TreksGlobalConfig from './globals/Treks-page'
 import { Media } from './collections/Media'
-import HeaderConfig from './globals/Header'
-import LandingPageConfig from './globals/Landing-page'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
 
-
-  
 export default buildConfig({
   serverURL: process.env.SERVER_URL,
   admin: {
@@ -27,11 +29,11 @@ export default buildConfig({
     },
     livePreview: {
       url: process.env.SERVER_URL,
-      globals: ['header', 'landing_page'],
     },
   },
-  collections: [Users, Media],
-  globals: [HeaderConfig, LandingPageConfig],
+  collections: [TreksCollectionConfig, Users, Media],
+  globals: [HeaderGlobalConfig, LandingGlobalPageConfig, TreksGlobalConfig],
+
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || '',
   typescript: {
@@ -49,7 +51,7 @@ export default buildConfig({
       bucket: process.env.S3_BUCKET as string,
       config: {
         endpoint: process.env.S3_ENDPOINT,
-         region: 'ap-south-1', // any string works; Filebase ignores it
+        region: 'us-east-1',
         forcePathStyle: true, // mandatory for non‑AWS hosts
         credentials: {
           accessKeyId: process.env.S3_ACCESS_KEY_ID as string,

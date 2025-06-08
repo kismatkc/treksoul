@@ -67,6 +67,7 @@ export interface Config {
   };
   blocks: {};
   collections: {
+    treks: Trek;
     users: User;
     media: Media;
     'payload-locked-documents': PayloadLockedDocument;
@@ -75,6 +76,7 @@ export interface Config {
   };
   collectionsJoins: {};
   collectionsSelect: {
+    treks: TreksSelect<false> | TreksSelect<true>;
     users: UsersSelect<false> | UsersSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
@@ -87,10 +89,12 @@ export interface Config {
   globals: {
     header: Header;
     landing_page: LandingPage;
+    treks_page: TreksPage;
   };
   globalsSelect: {
     header: HeaderSelect<false> | HeaderSelect<true>;
     landing_page: LandingPageSelect<false> | LandingPageSelect<true>;
+    treks_page: TreksPageSelect<false> | TreksPageSelect<true>;
   };
   locale: null;
   user: User & {
@@ -121,20 +125,69 @@ export interface UserAuthOperations {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "users".
+ * via the `definition` "treks".
  */
-export interface User {
+export interface Trek {
   id: string;
+  /**
+   * Full trek name shown on cards and detail pages.
+   */
+  name: string;
+  /**
+   * URL slug (auto-filled from name if left blank).
+   */
+  slug: string;
+  /**
+   * Primary cover photo (≥ 1 200 × 800 px). Appears in cards and as the hero banner.
+   */
+  heroImage: string | Media;
+  /**
+   * Select or drag-and-drop images at once. No per-image metadata.
+   */
+  gallery: (string | Media)[];
+  /**
+   * Package cost in the selected currency.
+   */
+  price: {
+    /**
+     * Numeric price without commas or separators.
+     */
+    amount: number;
+    /**
+     * Currency code for the price.
+     */
+    currency: 'NPR' | 'USD' | 'EUR' | 'GBP' | 'INR' | 'AUD' | 'CAD';
+  };
+  /**
+   * Total trekking days (do not count arrival/departure buffer days).
+   */
+  durationDays: number;
+  /**
+   * One‑paragraph teaser (≈ 150 characters). Used in search results and SEO meta description.
+   */
+  summary: string;
+  /**
+   * Exactly three ultra‑short selling points (e.g. “12 d / 130 km”, “Sherpa culture”, “Hot springs”).
+   */
+  highlights: {
+    /**
+     * Single highlight phrase.
+     */
+    value: string;
+    id?: string | null;
+  }[];
+  /**
+   * Everything covered by the package price—one item per row (e.g. “Kathmandu–Lukla flights”).
+   */
+  included: {
+    /**
+     * Inclusion detail.
+     */
+    item: string;
+    id?: string | null;
+  }[];
   updatedAt: string;
   createdAt: string;
-  email: string;
-  resetPasswordToken?: string | null;
-  resetPasswordExpiration?: string | null;
-  salt?: string | null;
-  hash?: string | null;
-  loginAttempts?: number | null;
-  lockUntil?: string | null;
-  password?: string | null;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -157,11 +210,32 @@ export interface Media {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "users".
+ */
+export interface User {
+  id: string;
+  updatedAt: string;
+  createdAt: string;
+  email: string;
+  resetPasswordToken?: string | null;
+  resetPasswordExpiration?: string | null;
+  salt?: string | null;
+  hash?: string | null;
+  loginAttempts?: number | null;
+  lockUntil?: string | null;
+  password?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-locked-documents".
  */
 export interface PayloadLockedDocument {
   id: string;
   document?:
+    | ({
+        relationTo: 'treks';
+        value: string | Trek;
+      } | null)
     | ({
         relationTo: 'users';
         value: string | User;
@@ -211,6 +285,38 @@ export interface PayloadMigration {
   batch?: number | null;
   updatedAt: string;
   createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "treks_select".
+ */
+export interface TreksSelect<T extends boolean = true> {
+  name?: T;
+  slug?: T;
+  heroImage?: T;
+  gallery?: T;
+  price?:
+    | T
+    | {
+        amount?: T;
+        currency?: T;
+      };
+  durationDays?: T;
+  summary?: T;
+  highlights?:
+    | T
+    | {
+        value?: T;
+        id?: T;
+      };
+  included?:
+    | T
+    | {
+        item?: T;
+        id?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -344,6 +450,21 @@ export interface LandingPage {
   createdAt?: string | null;
 }
 /**
+ * Configure the Treks page settings for your site.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "treks_page".
+ */
+export interface TreksPage {
+  id: string;
+  /**
+   * Heading for the Treks page.
+   */
+  treks_page_heading?: string | null;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "header_select".
  */
@@ -371,6 +492,16 @@ export interface LandingPageSelect<T extends boolean = true> {
   landing_page_background_image?: T;
   Search_bar_heading?: T;
   Search_bar_placeholder?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "treks_page_select".
+ */
+export interface TreksPageSelect<T extends boolean = true> {
+  treks_page_heading?: T;
   updatedAt?: T;
   createdAt?: T;
   globalType?: T;

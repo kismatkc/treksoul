@@ -1,6 +1,6 @@
 import type { GlobalConfig } from 'payload'
 
-const HeaderConfig: GlobalConfig = {
+const LandingConfig: GlobalConfig = {
   slug: 'landing_page',
   label: 'Landing page settings',
   admin: {
@@ -38,4 +38,4 @@ const HeaderConfig: GlobalConfig = {
   ],
 }
 
-export default HeaderConfig
+export default LandingConfig
