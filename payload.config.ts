@@ -6,6 +6,7 @@ import path from 'path'
 import { buildConfig } from 'payload'
 import { fileURLToPath } from 'url'
 import sharp from 'sharp'
+import { s3Storage } from '@payloadcms/storage-s3' // ✅ named export
 
 import { Users } from './collections/Users'
 import { Media } from './collections/Media'
@@ -16,6 +17,7 @@ const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
 
 
+  
 export default buildConfig({
   serverURL: process.env.SERVER_URL,
   admin: {
@@ -42,5 +44,18 @@ export default buildConfig({
   plugins: [
     payloadCloudPlugin(),
     // storage-adapter-placeholder
+    s3Storage({
+      collections: { media: true },
+      bucket: process.env.S3_BUCKET as string,
+      config: {
+        endpoint: process.env.S3_ENDPOINT,
+         region: 'ap-south-1', // any string works; Filebase ignores it
+        forcePathStyle: true, // mandatory for non‑AWS hosts
+        credentials: {
+          accessKeyId: process.env.S3_ACCESS_KEY_ID as string,
+          secretAccessKey: process.env.S3_SECRET as string,
+        },
+      },
+    }),
   ],
 })
