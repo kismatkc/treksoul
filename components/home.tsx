@@ -18,7 +18,7 @@ export default function Hero({ landingPageData }: { landingPageData: LandingPage
       <section
         id="home"
         className="
-          relative h-screen w-screen overflow-hidden pr-4
+          relative h-screen w-full overflow-hidden pr-4 
           [clip-path:url('#wave-clip')]
         "
       >

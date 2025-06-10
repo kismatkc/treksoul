@@ -10,7 +10,7 @@ type Props = { currency: string; amount: number }
 export function PriceBadge({ currency, amount }: Props) {
   const formatted = new Intl.NumberFormat(
     // you can swap in your user’s locale if you like, e.g. 'ne-NP'
-    navigator.language || 'en-US',
+    'en-US',
     {
       style: 'currency',
       currency,

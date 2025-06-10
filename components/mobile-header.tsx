@@ -1,6 +1,7 @@
 'use client'
 import { Button } from '@/components/ui/button'
 import { Header } from '@/payload-types'
+import Link from 'next/link'
 
 import {
   Sheet,
@@ -15,7 +16,7 @@ import {
 
 import { MenuIcon, XIcon } from 'lucide-react'
 import { useSectionObserver } from '@/hooks/useSection'
-import { CSSProperties, useEffect } from 'react'
+import { CSSProperties } from 'react'
 import { cn } from '@/lib/utils'
 
 export function MobileMenu({ headerData }: { headerData: Header }) {
@@ -24,11 +25,17 @@ export function MobileMenu({ headerData }: { headerData: Header }) {
   )
 
   return (
-    <header className="fixed top-0 z-50 w-screen">
+    <header className="fixed top-0 z-50 w-full">
       <Sheet>
         <div className="flex justify-between p-3 pr-4">
-          <div className="text-2xl font-black  p-2 cursor-pointer">TrekSoulNepal</div>
-
+         
+          <Link
+            href="#home"
+            aria-label="Home"
+            className="block text-center text-2xl font-black tracking-tight text-emerald-700"
+          >
+            TrekSoulNepal
+          </Link>
           <div className="flex gap-x-3 items-center">
             <Button
               style={{ backgroundColor: headerData.Book_now_button_color }}
@@ -42,11 +49,17 @@ export function MobileMenu({ headerData }: { headerData: Header }) {
           </div>
         </div>
 
-        <SheetContent side="top" overlay={false} hideXIcon className=" h-[50vh]">
+        <SheetContent side="top" overlay={false} hideXIcon className=" h-[60vh]">
           <SheetTitle />
           <SheetHeader>
             <div className="flex justify-between ">
-              <div className="text-2xl font-black  p-2 cursor-pointer">TrekSoulNepal</div>
+              <Link
+                href="/"
+                aria-label="Home"
+                className="block text-center text-2xl font-black tracking-tight text-emerald-700"
+              >
+                TrekSoulNepal
+              </Link>
 
               <div className="flex gap-x-3 items-center">
                 <Button

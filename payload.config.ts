@@ -15,6 +15,8 @@ import TreksCollectionConfig from './collections/Treks'
 import HeaderGlobalConfig from './globals/Header'
 import LandingGlobalPageConfig from './globals/Landing-page'
 import TreksGlobalConfig from './globals/Treks-page'
+import AboutUsConfig from './globals/About-us'
+import ContactConfig from './globals/Contact'
 import { Media } from './collections/Media'
 
 const filename = fileURLToPath(import.meta.url)
@@ -32,7 +34,7 @@ export default buildConfig({
     },
   },
   collections: [TreksCollectionConfig, Users, Media],
-  globals: [HeaderGlobalConfig, LandingGlobalPageConfig, TreksGlobalConfig],
+  globals: [HeaderGlobalConfig, LandingGlobalPageConfig, TreksGlobalConfig,AboutUsConfig,ContactConfig],
 
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || '',

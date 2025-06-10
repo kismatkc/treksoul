@@ -90,11 +90,15 @@ export interface Config {
     header: Header;
     landing_page: LandingPage;
     treks_page: TreksPage;
+    about_us: AboutUs;
+    footer: Footer;
   };
   globalsSelect: {
     header: HeaderSelect<false> | HeaderSelect<true>;
     landing_page: LandingPageSelect<false> | LandingPageSelect<true>;
     treks_page: TreksPageSelect<false> | TreksPageSelect<true>;
+    about_us: AboutUsSelect<false> | AboutUsSelect<true>;
+    footer: FooterSelect<false> | FooterSelect<true>;
   };
   locale: null;
   user: User & {
@@ -134,15 +138,15 @@ export interface Trek {
    */
   name: string;
   /**
-   * URL slug (auto-filled from name if left blank).
+   * URL‑friendly slug. If left blank, it will be auto‑generated from the trek name.
    */
   slug: string;
   /**
-   * Primary cover photo (≥ 1 200 × 800 px). Appears in cards and as the hero banner.
+   * Primary cover photo (recommended ≥ 1 200 × 800 px). Displayed on the card and as the hero banner.
    */
   heroImage: string | Media;
   /**
-   * Select or drag-and-drop images at once. No per-image metadata.
+   * Drag‑and‑drop or select multiple images at once. No per‑image metadata.
    */
   gallery: (string | Media)[];
   /**
@@ -154,20 +158,20 @@ export interface Trek {
      */
     amount: number;
     /**
-     * Currency code for the price.
+     * ISO currency code.
      */
     currency: 'NPR' | 'USD' | 'EUR' | 'GBP' | 'INR' | 'AUD' | 'CAD';
   };
   /**
-   * Total trekking days (do not count arrival/departure buffer days).
+   * Total trekking days (do not include arrival or departure buffer days).
    */
   durationDays: number;
   /**
-   * One‑paragraph teaser (≈ 150 characters). Used in search results and SEO meta description.
+   * One‑paragraph teaser (≈ 150 characters). Shown in search results and used for SEO meta descriptions.
    */
   summary: string;
   /**
-   * Exactly three ultra‑short selling points (e.g. “12 d / 130 km”, “Sherpa culture”, “Hot springs”).
+   * Add up to three ultra‑short selling points (e.g. “12 d / 130 km”, “Sherpa culture”, “Hot springs”).
    */
   highlights: {
     /**
@@ -177,7 +181,7 @@ export interface Trek {
     id?: string | null;
   }[];
   /**
-   * Everything covered by the package price—one item per row (e.g. “Kathmandu–Lukla flights”).
+   * Everything covered by the package price—enter one item per row (e.g. “Kathmandu–Lukla flights”).
    */
   included: {
     /**
@@ -384,7 +388,7 @@ export interface PayloadMigrationsSelect<T extends boolean = true> {
   createdAt?: T;
 }
 /**
- * Configure the header settings for your site.
+ * Configure everything that appears in the site header.
  *
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "header".
@@ -392,42 +396,42 @@ export interface PayloadMigrationsSelect<T extends boolean = true> {
 export interface Header {
   id: string;
   /**
-   * Upload your logo here. It will be displayed in the header.
+   * Upload the company logo. It will be displayed in the header.
    */
   logo: string | Media;
   /**
-   * Text for the "Book Now" button in the header.
+   * Text that appears on the “Book Now” button.
    */
   Book_now_button_text: string;
   /**
-   * Color for the "Book Now" button in the header.Hex code/rgb value/color name
+   * Color of the “Book Now” button (use a HEX code, RGB value, or valid CSS color name).
    */
   Book_now_button_color: string;
   /**
-   * Add navigation links for the header. Each link should have a label and a URL.
+   * Add, remove, or reorder the links that appear in the header navigation.
    */
   navigation_links?:
     | {
         /**
-         * Text for the navigation link.
+         * Text displayed for the navigation link.
          */
         label: string;
         /**
-         * URL for the navigation link. Use absolute URLs or relative paths.
+         * Section to scroll to when the link is clicked. Make sure each ID exists on the page.
          */
         section_id: 'home' | 'about' | 'contact' | 'treks';
         id?: string | null;
       }[]
     | null;
   /**
-   * Color for the navigation links when hovered over. Use hex code/rgb value/color name.
+   * Color applied to navigation links on hover (HEX code, RGB value, or valid CSS color name).
    */
   Navigation_links_hover_color?: string | null;
   updatedAt?: string | null;
   createdAt?: string | null;
 }
 /**
- * Configure the Landing page settings for your site.
+ * Configure everything that appears on the landing / hero section of your site.
  *
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "landing_page".
@@ -435,22 +439,22 @@ export interface Header {
 export interface LandingPage {
   id: string;
   /**
-   * Upload the background image for the landing page.
+   * Background image for the landing hero. Recommended ratio ≈ 16 : 9.
    */
   landing_page_background_image: string | Media;
   /**
-   * Heading for the search bar in the header.
+   * Headline shown directly above the search bar.
    */
   Search_bar_heading?: string | null;
   /**
-   * Searchbar placeholder.
+   * Placeholder text that appears inside the search input.
    */
   Search_bar_placeholder?: string | null;
   updatedAt?: string | null;
   createdAt?: string | null;
 }
 /**
- * Configure the Treks page settings for your site.
+ * Configure headings and button copy for the Treks page.
  *
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "treks_page".
@@ -458,9 +462,84 @@ export interface LandingPage {
 export interface TreksPage {
   id: string;
   /**
-   * Heading for the Treks page.
+   * Main heading displayed at the top of the Treks page.
    */
   treks_page_heading?: string | null;
+  /**
+   * Text displayed on the left button inside each trek card.
+   */
+  treks_card_left_button_text?: string | null;
+  /**
+   * Text displayed on the right button inside each trek card.
+   */
+  treks_card_right_button_text?: string | null;
+  /**
+   * Background color for the left button (HEX code, RGB value, or valid CSS color name).
+   */
+  treks_card_left_button_color?: string | null;
+  /**
+   * Background color for the right button (HEX code, RGB value, or valid CSS color name).
+   */
+  treks_card_right_button_color?: string | null;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * Edit the “About Us” section and FAQ that appear on the landing page.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "about_us".
+ */
+export interface AboutUs {
+  id: string;
+  heading: string;
+  subheading: string;
+  /**
+   * Add or remove selling‑point bullets.
+   */
+  bullets?:
+    | {
+        text: string;
+        id?: string | null;
+      }[]
+    | null;
+  /**
+   * Questions show as accordion headings.
+   */
+  faqs?:
+    | {
+        question: string;
+        answer: string;
+        id?: string | null;
+      }[]
+    | null;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * Logo text, quick links, social URLs and colours for the footer.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "footer".
+ */
+export interface Footer {
+  id: string;
+  brand_name: string;
+  quick_links?:
+    | {
+        label: string;
+        section_id: string;
+        id?: string | null;
+      }[]
+    | null;
+  social?: {
+    facebook?: string | null;
+    instagram?: string | null;
+    whatsapp?: string | null;
+  };
+  accent_color?: string | null;
+  hover_bg_color?: string | null;
+  copyright_name?: string | null;
   updatedAt?: string | null;
   createdAt?: string | null;
 }
@@ -502,6 +581,61 @@ export interface LandingPageSelect<T extends boolean = true> {
  */
 export interface TreksPageSelect<T extends boolean = true> {
   treks_page_heading?: T;
+  treks_card_left_button_text?: T;
+  treks_card_right_button_text?: T;
+  treks_card_left_button_color?: T;
+  treks_card_right_button_color?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "about_us_select".
+ */
+export interface AboutUsSelect<T extends boolean = true> {
+  heading?: T;
+  subheading?: T;
+  bullets?:
+    | T
+    | {
+        text?: T;
+        id?: T;
+      };
+  faqs?:
+    | T
+    | {
+        question?: T;
+        answer?: T;
+        id?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "footer_select".
+ */
+export interface FooterSelect<T extends boolean = true> {
+  brand_name?: T;
+  quick_links?:
+    | T
+    | {
+        label?: T;
+        section_id?: T;
+        id?: T;
+      };
+  social?:
+    | T
+    | {
+        facebook?: T;
+        instagram?: T;
+        whatsapp?: T;
+      };
+  accent_color?: T;
+  hover_bg_color?: T;
+  copyright_name?: T;
   updatedAt?: T;
   createdAt?: T;
   globalType?: T;
