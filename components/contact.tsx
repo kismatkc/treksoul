@@ -53,7 +53,7 @@ export default function FooterClient({ footerData }: Props) {
                       '--nav-hover-active-color': 'var(--accent-color)',
                     } as CSSProperties
                   }
-                  className="p-2 hover:text-[color:var(--nav-hover-active-color)]"
+                  className="p-2 hover:text-[color:var(--nav-hover-active-color)] text-base font-medium"
                 >
                   {label}
                 </Link>

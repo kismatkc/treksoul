@@ -34,7 +34,7 @@ export default function AboutUsClient({ aboutData }: Props) {
         <ul className="space-y-4">
           {bullets.map(({ text }, idx) =>
             text ? (
-              <li key={idx} className="flex items-start gap-2 text-sm leading-snug">
+              <li key={idx} className="flex items-start gap-2 text-base leading-snug">
                 <span className="mt-1 h-2 w-2 flex-shrink-0 rounded-full bg-emerald-600" />
                 {text}
               </li>
@@ -49,10 +49,10 @@ export default function AboutUsClient({ aboutData }: Props) {
           {faqs.map(({ question, answer }, idx) =>
             question && answer ? (
               <AccordionItem key={idx} value={`item-${idx}`} className="border-b">
-                <AccordionTrigger className="py-4 text-left font-medium">
+                <AccordionTrigger className=" py-4 text-left font-medium text-base">
                   {question}
                 </AccordionTrigger>
-                <AccordionContent className="pb-4 text-sm leading-relaxed">
+                <AccordionContent className="pb-4 text-base leading-relaxed">
                   {answer}
                 </AccordionContent>
               </AccordionItem>
