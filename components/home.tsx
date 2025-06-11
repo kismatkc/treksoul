@@ -39,7 +39,7 @@ export default function Hero({ landingPageData }: { landingPageData: LandingPage
         relative z-[51] mt-36 mx-4 
         rounded-[32px] px-6 py-10
         bg-gradient-to-br from-emerald-700/90 to-teal-600/90
-        backdrop-blur-sm max-w-[650px] 
+        backdrop-blur-sm max-w-[550px] min-w-[450px]
         
       "
         >
