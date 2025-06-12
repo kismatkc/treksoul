@@ -1,6 +1,6 @@
 'use client'
 import { Button } from '@/components/ui/button'
-import { Header } from '@/payload-types'
+import { BookingSheet, Header } from '@/payload-types'
 import Link from 'next/link'
 
 import {
@@ -16,8 +16,15 @@ import { MenuIcon, XIcon } from 'lucide-react'
 import { useSectionObserver } from '@/hooks/useSection'
 import { CSSProperties } from 'react'
 import { cn } from '@/lib/utils'
+import BookNowSheet from './book-sheet'
 
-export function MobileMenu({ headerData }: { headerData: Header }) {
+export function MobileMenu({
+  headerData,
+  bookData,
+}: {
+  headerData: Header
+  bookData: BookingSheet
+}) {
   const active = useSectionObserver(
     headerData.navigation_links?.map((link) => link.section_id) || [],
   )
@@ -34,12 +41,7 @@ export function MobileMenu({ headerData }: { headerData: Header }) {
             TrekSoulNepal
           </Link>
           <div className="flex gap-x-3 items-center">
-            <Button
-              style={{ backgroundColor: headerData.Book_now_button_color }}
-              className="p-4 py-5 cursor-pointer font-semibold"
-            >
-              {headerData.Book_now_button_text}
-            </Button>
+            <BookNowSheet bookData={bookData} />
             <SheetTrigger asChild>
               <MenuIcon className="w-6 h-6 cursor-pointer " strokeWidth={3} />
             </SheetTrigger>

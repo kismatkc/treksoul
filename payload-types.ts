@@ -92,6 +92,7 @@ export interface Config {
     treks_page: TreksPage;
     about_us: AboutUs;
     footer: Footer;
+    booking_sheet: BookingSheet;
   };
   globalsSelect: {
     header: HeaderSelect<false> | HeaderSelect<true>;
@@ -99,6 +100,7 @@ export interface Config {
     treks_page: TreksPageSelect<false> | TreksPageSelect<true>;
     about_us: AboutUsSelect<false> | AboutUsSelect<true>;
     footer: FooterSelect<false> | FooterSelect<true>;
+    booking_sheet: BookingSheetSelect<false> | BookingSheetSelect<true>;
   };
   locale: null;
   user: User & {
@@ -554,6 +556,28 @@ export interface Footer {
   createdAt?: string | null;
 }
 /**
+ * Button copy / colours, phone & WhatsApp numbers, public e-mail and trek list.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "booking_sheet".
+ */
+export interface BookingSheet {
+  id: string;
+  button_text: string;
+  button_color: string;
+  contact: {
+    phone_number: string;
+    whatsapp_number?: string | null;
+    email_address: string;
+  };
+  /**
+   * Auto-lists all treks; disabled for manual editing.
+   */
+  treks: (string | Trek)[];
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "header_select".
  */
@@ -653,6 +677,25 @@ export interface FooterSelect<T extends boolean = true> {
         id?: T;
       };
   copyright_name?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "booking_sheet_select".
+ */
+export interface BookingSheetSelect<T extends boolean = true> {
+  button_text?: T;
+  button_color?: T;
+  contact?:
+    | T
+    | {
+        phone_number?: T;
+        whatsapp_number?: T;
+        email_address?: T;
+      };
+  treks?: T;
   updatedAt?: T;
   createdAt?: T;
   globalType?: T;

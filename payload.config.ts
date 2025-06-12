@@ -17,6 +17,7 @@ import LandingGlobalPageConfig from './globals/Landing-page'
 import TreksGlobalConfig from './globals/Treks-page'
 import AboutUsConfig from './globals/About-us'
 import ContactConfig from './globals/Contact'
+import BookingSheetConfig from './globals/Book-sheet'
 import { Media } from './collections/Media'
 
 const filename = fileURLToPath(import.meta.url)
@@ -40,6 +41,7 @@ export default buildConfig({
     TreksGlobalConfig,
     AboutUsConfig,
     ContactConfig,
+    BookingSheetConfig,
   ],
 
   editor: lexicalEditor(),
