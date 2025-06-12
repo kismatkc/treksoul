@@ -517,7 +517,7 @@ export interface AboutUs {
   createdAt?: string | null;
 }
 /**
- * Logo text, quick links, social URLs and colours for the footer.
+ * Logo text, quick links, social URLs, colours and footer badges.
  *
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "footer".
@@ -539,6 +539,16 @@ export interface Footer {
   };
   accent_color?: string | null;
   hover_bg_color?: string | null;
+  /**
+   * Logo + one line text for association badges.
+   */
+  cert_badges?:
+    | {
+        logo?: (string | null) | Media;
+        text: string;
+        id?: string | null;
+      }[]
+    | null;
   copyright_name?: string | null;
   updatedAt?: string | null;
   createdAt?: string | null;
@@ -635,6 +645,13 @@ export interface FooterSelect<T extends boolean = true> {
       };
   accent_color?: T;
   hover_bg_color?: T;
+  cert_badges?:
+    | T
+    | {
+        logo?: T;
+        text?: T;
+        id?: T;
+      };
   copyright_name?: T;
   updatedAt?: T;
   createdAt?: T;

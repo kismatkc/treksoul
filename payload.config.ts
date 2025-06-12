@@ -6,7 +6,7 @@ import path from 'path'
 import { buildConfig } from 'payload'
 import { fileURLToPath } from 'url'
 import sharp from 'sharp'
-import { s3Storage } from '@payloadcms/storage-s3' // ✅ named export
+// import { s3Storage } from '@payloadcms/storage-s3' // ✅ named export
 
 import { Users } from './collections/Users'
 
@@ -34,7 +34,13 @@ export default buildConfig({
     },
   },
   collections: [TreksCollectionConfig, Users, Media],
-  globals: [HeaderGlobalConfig, LandingGlobalPageConfig, TreksGlobalConfig,AboutUsConfig,ContactConfig],
+  globals: [
+    HeaderGlobalConfig,
+    LandingGlobalPageConfig,
+    TreksGlobalConfig,
+    AboutUsConfig,
+    ContactConfig,
+  ],
 
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || '',
@@ -48,18 +54,19 @@ export default buildConfig({
   plugins: [
     payloadCloudPlugin(),
     // storage-adapter-placeholder
-    s3Storage({
-      collections: { media: true },
-      bucket: process.env.S3_BUCKET as string,
-      config: {
-        endpoint: process.env.S3_ENDPOINT,
-        region: 'us-east-1',
-        forcePathStyle: true, // mandatory for non‑AWS hosts
-        credentials: {
-          accessKeyId: process.env.S3_ACCESS_KEY_ID as string,
-          secretAccessKey: process.env.S3_SECRET as string,
-        },
-      },
-    }),
+    // s3Storage({
+    //   collections: { media: true },
+    //   bucket: process.env.S3_BUCKET as string,
+    //   config: {
+    //     endpoint: process.env.S3_ENDPOINT,
+    //     region: 'auto',
+    //     // region: 'us-east-1',
+    //     forcePathStyle: true, // mandatory for non‑AWS hosts
+    //     credentials: {
+    //       accessKeyId: process.env.S3_ACCESS_KEY_ID as string,
+    //       secretAccessKey: process.env.S3_SECRET as string,
+    //     },
+    //   },
+    // }),
   ],
 })

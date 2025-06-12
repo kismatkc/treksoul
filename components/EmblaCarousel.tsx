@@ -39,34 +39,22 @@ const EmblaCarousel: React.FC<PropType> = (props) => {
       <div className="embla__viewport" ref={emblaRef}>
         <div className="embla__container">
           {treks.map((trek, index) => (
-            <div className="embla__slide" key={index}>
-              {/* dont use priority true flag it will bypass the lazy loading,optimization techniques only use it for hero images and images hwere i nedd it faster ratehr than optimizaed  */}
+            <div className="embla__slide " key={index}>
               <TrekCard trek={trek} treksSetting={treksSetting} />
             </div>
           ))}
         </div>
       </div>
 
-      {/* <div className="embla__controls">
-        <div className="embla__buttons " style={{ opacity: treks.length > 1 ? 1 : 0 }}>
-          <div className='border-2 border-red-500'>
-          <PrevButton onClick={onPrevButtonClick} disabled={prevBtnDisabled}/>
-          </div>
-          <NextButton onClick={onNextButtonClick} disabled={nextBtnDisabled} />
-        </div>
-      </div>
- */}
-
       <div className="embla__controls">
-  
-      <div className="embla__controls">
-  <div
-    className="embla__buttons flex items-center space-x-2 pl-6"
-    style={{ opacity: treks.length > 1 ? 1 : 0 }}
-  >
-    {/* Prev */}
-    <div
-      className="
+        <div className="embla__controls">
+          <div
+            className="embla__buttons flex items-center space-x-2 pl-6"
+            style={{ opacity: treks.length > 1 ? 1 : 0 }}
+          >
+            {/* Prev */}
+            <div
+              className="
         w-14 h-14 
         flex items-center justify-center 
         rounded-full 
@@ -75,13 +63,13 @@ const EmblaCarousel: React.FC<PropType> = (props) => {
         hover:bg-gray-400
         transition-all
       "
-    >
-      <PrevButton onClick={onPrevButtonClick} disabled={prevBtnDisabled} />
-    </div>
+            >
+              <PrevButton onClick={onPrevButtonClick} disabled={prevBtnDisabled} />
+            </div>
 
-    {/* Next */}
-    <div
-      className="
+            {/* Next */}
+            <div
+              className="
         w-14 h-14 
         flex items-center justify-center 
         rounded-full 
@@ -90,12 +78,11 @@ const EmblaCarousel: React.FC<PropType> = (props) => {
         hover:bg-gray-400
         transition-all
       "
-    >
-      <NextButton onClick={onNextButtonClick} disabled={nextBtnDisabled} />
-    </div>
-  </div>
-</div>
-
+            >
+              <NextButton onClick={onNextButtonClick} disabled={nextBtnDisabled} />
+            </div>
+          </div>
+        </div>
       </div>
     </section>
   )

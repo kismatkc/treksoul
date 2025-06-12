@@ -7,8 +7,6 @@ import {
   Sheet,
   SheetClose,
   SheetContent,
-  SheetDescription,
-  SheetFooter,
   SheetHeader,
   SheetTitle,
   SheetTrigger,
@@ -28,7 +26,6 @@ export function MobileMenu({ headerData }: { headerData: Header }) {
     <header className="fixed top-0 z-50 w-full">
       <Sheet>
         <div className="flex justify-between p-3 pr-4">
-         
           <Link
             href="#home"
             aria-label="Home"

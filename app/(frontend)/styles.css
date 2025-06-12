@@ -114,7 +114,8 @@
 /* embla */
 
 .embla {
-  max-width: 48rem;
+  max-width: 100%;
+  /* max-width: 48rem; */
   margin: auto;
   --slide-height: 19rem;
   --slide-spacing: 1rem;
@@ -197,9 +198,18 @@
   height: 35%;
 }
 
+@media (min-width: 740px) {
+  .embla {
+    --slide-size: 50%;
+  }
+}
+@media (min-width: 1000px) {
+  .embla {
+    --slide-size: 33%%;
+  }
+}
+
 /* ── Embla: modern round arrows ───────────────────────── */
-
-
 @layer base {
   main {
     @apply overflow-x-hidden;
