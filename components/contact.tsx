@@ -5,7 +5,6 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { FaFacebookF, FaInstagram, FaWhatsapp } from 'react-icons/fa6'
 import type { Footer } from '@/payload-types'
-import { Media } from '@/collections/Media'
 
 interface Props {
   footerData: Footer

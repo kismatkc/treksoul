@@ -33,7 +33,7 @@ export function MobileMenu({
   return (
     <header className="fixed top-0 z-50 w-full inset-x-0 bg-white shadow-md">
       <Sheet>
-        <div className="flex justify-between  px-4">
+        <div className="flex justify-between  px-4 py-1">
           <Link
             href="#home"
             aria-label="Home"
