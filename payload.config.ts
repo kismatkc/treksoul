@@ -19,6 +19,7 @@ import AboutUsConfig from './globals/About-us'
 import ContactConfig from './globals/Contact'
 import BookingSheetConfig from './globals/Book-sheet'
 import { Media } from './collections/Media'
+import TrekDetailSettings from './globals/TrekDetailSettings'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -42,6 +43,7 @@ export default buildConfig({
     AboutUsConfig,
     ContactConfig,
     BookingSheetConfig,
+    TrekDetailSettings,
   ],
 
   editor: lexicalEditor(),

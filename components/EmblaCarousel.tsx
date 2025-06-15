@@ -4,12 +4,13 @@ import { PrevButton, NextButton, usePrevNextButtons } from './EmblaCarouselArrow
 import Autoplay from 'embla-carousel-autoplay'
 import useEmblaCarousel from 'embla-carousel-react'
 import TrekCard from './trek-card'
-import { Trek, TreksPage } from '@/payload-types'
+import { BookingSheet, Trek, TreksPage } from '@/payload-types'
 
 type PropType = {
   options?: EmblaOptionsType
   treks: Trek[]
   treksSetting: TreksPage
+  bookData: BookingSheet
 }
 
 const autoplayConfig = Autoplay({
@@ -18,7 +19,7 @@ const autoplayConfig = Autoplay({
 })
 
 const EmblaCarousel: React.FC<PropType> = (props) => {
-  const { options, treks, treksSetting } = props
+  const { options, treks, treksSetting, bookData } = props
   const [emblaRef, emblaApi] = useEmblaCarousel(options, [autoplayConfig])
 
   const onNavButtonClick = useCallback((emblaApi: EmblaCarouselType) => {
@@ -40,7 +41,7 @@ const EmblaCarousel: React.FC<PropType> = (props) => {
         <div className="embla__container">
           {treks.map((trek, index) => (
             <div className="embla__slide " key={index}>
-              <TrekCard trek={trek} treksSetting={treksSetting} />
+              <TrekCard trek={trek} treksSetting={treksSetting} bookData={bookData} />
             </div>
           ))}
         </div>

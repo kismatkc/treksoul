@@ -15,7 +15,11 @@ export default async function TrekServer() {
       pagination: false,
       depth: 1,
     })
-    return <Treks treksSetting={treksSetting} treks={treks} />
+    const bookData = await payload.findGlobal({
+      slug: 'booking_sheet',
+      depth: 1, // depth 1 is plenty; no deep relations here
+    })
+    return <Treks treksSetting={treksSetting} treks={treks} bookData={bookData} />
   } catch (error) {
     console.error('Error fetching header data:', error)
     return null

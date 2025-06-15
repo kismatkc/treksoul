@@ -5,6 +5,7 @@ import { Input } from '@/components/ui/input' // shadcn/ui input
 import { Search } from 'lucide-react' // lucide‑react icon
 import { FormEvent } from 'react'
 import { LandingPage } from '@/payload-types'
+import TrekSearch from './trek-search'
 
 export default function Hero({ landingPageData }: { landingPageData: LandingPage }) {
   const handleSubmit = (e: FormEvent) => {
@@ -26,7 +27,7 @@ export default function Hero({ landingPageData }: { landingPageData: LandingPage
           src={backgroundImage.url}
           alt="Clouds over mountains"
           fill
-          className="object-cover"
+          className="object-cover select-none "
           priority
           style={{
             backgroundImage: 'url(/blur.jpg)',
@@ -41,7 +42,7 @@ export default function Hero({ landingPageData }: { landingPageData: LandingPage
         bg-gradient-to-br from-emerald-700/90 to-teal-600/90
         backdrop-blur-sm 
        
-        flex flex-col grow max-w-[600px]
+        flex flex-col grow max-w-[700px]
       "
         >
           <h2 className="text-white text-2xl font-extrabold leading-tight">
@@ -49,25 +50,9 @@ export default function Hero({ landingPageData }: { landingPageData: LandingPage
           </h2>
 
           <form onSubmit={handleSubmit} className="mt-8">
-            <div className="flex items-center overflow-hidden rounded-full bg-white shadow-md ">
-              <Input
-                type="search"
-                placeholder={landingPageData.Search_bar_placeholder || 'Search e.g. for Nepal'}
-                className="
-              flex-1 h-14 border-0
-              px-6 text-base placeholder:text-gray-400
-              focus-visible:ring-0 focus-visible:outline-none
-            "
-              />
-
-              <button
-                className="
-              grid h-14 w-16 place-content-center bg-gray-300
-            "
-              >
-                <Search className="h-6 w-6 text-gray-600" />
-              </button>
-            </div>
+            <TrekSearch
+              placeholder={landingPageData.Search_bar_placeholder || 'Search for Nepal'}
+            />
           </form>
         </div>
       </section>

@@ -41,7 +41,10 @@ export function MobileMenu({
             TrekSoulNepal
           </Link>
           <div className="flex gap-x-3 items-center">
-            <BookNowSheet bookData={bookData} />
+            <BookNowSheet
+              bookData={bookData}
+              bookNowButtonColor={headerData.Book_now_button_color}
+            />
             <SheetTrigger asChild>
               <MenuIcon className="w-6 h-6 cursor-pointer " strokeWidth={3} />
             </SheetTrigger>

@@ -93,6 +93,7 @@ export interface Config {
     about_us: AboutUs;
     footer: Footer;
     booking_sheet: BookingSheet;
+    trek_detail_settings: TrekDetailSetting;
   };
   globalsSelect: {
     header: HeaderSelect<false> | HeaderSelect<true>;
@@ -101,6 +102,7 @@ export interface Config {
     about_us: AboutUsSelect<false> | AboutUsSelect<true>;
     footer: FooterSelect<false> | FooterSelect<true>;
     booking_sheet: BookingSheetSelect<false> | BookingSheetSelect<true>;
+    trek_detail_settings: TrekDetailSettingsSelect<false> | TrekDetailSettingsSelect<true>;
   };
   locale: null;
   user: User & {
@@ -135,63 +137,46 @@ export interface UserAuthOperations {
  */
 export interface Trek {
   id: string;
-  /**
-   * Full trek name shown on cards and detail pages.
-   */
   name: string;
-  /**
-   * URL‑friendly slug. If left blank, it will be auto‑generated from the trek name.
-   */
   slug: string;
-  /**
-   * Primary cover photo (recommended ≥ 1 200 × 800 px). Displayed on the card and as the hero banner.
-   */
   heroImage: string | Media;
-  /**
-   * Drag‑and‑drop or select multiple images at once. No per‑image metadata.
-   */
-  gallery: (string | Media)[];
-  /**
-   * Package cost in the selected currency.
-   */
+  gallery?: (string | Media)[] | null;
+  video?: string | null;
   price: {
-    /**
-     * Numeric price without commas or separators.
-     */
     amount: number;
-    /**
-     * ISO currency code.
-     */
     currency: 'NPR' | 'USD' | 'EUR' | 'GBP' | 'INR' | 'AUD' | 'CAD';
   };
-  /**
-   * Total trekking days (do not include arrival or departure buffer days).
-   */
   durationDays: number;
-  /**
-   * One‑paragraph teaser (≈ 150 characters). Shown in search results and used for SEO meta descriptions.
-   */
+  distanceKm?: number | null;
+  maxAltitude?: number | null;
+  difficulty?: ('Easy' | 'Moderate' | 'Challenging' | 'Strenuous') | null;
+  bestSeason?: ('Spring' | 'Summer' | 'Autumn' | 'Winter')[] | null;
   summary: string;
-  /**
-   * Add up to three ultra‑short selling points (e.g. “12 d / 130 km”, “Sherpa culture”, “Hot springs”).
-   */
-  highlights: {
-    /**
-     * Single highlight phrase.
-     */
-    value: string;
-    id?: string | null;
-  }[];
-  /**
-   * Everything covered by the package price—enter one item per row (e.g. “Kathmandu–Lukla flights”).
-   */
+  highlights?:
+    | {
+        value: string;
+        id?: string | null;
+      }[]
+    | null;
+  itinerary?:
+    | {
+        day: number;
+        title: string;
+        description: string;
+        image?: (string | null) | Media;
+        id?: string | null;
+      }[]
+    | null;
   included: {
-    /**
-     * Inclusion detail.
-     */
     item: string;
     id?: string | null;
   }[];
+  excluded?:
+    | {
+        item: string;
+        id?: string | null;
+      }[]
+    | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -301,6 +286,7 @@ export interface TreksSelect<T extends boolean = true> {
   slug?: T;
   heroImage?: T;
   gallery?: T;
+  video?: T;
   price?:
     | T
     | {
@@ -308,6 +294,10 @@ export interface TreksSelect<T extends boolean = true> {
         currency?: T;
       };
   durationDays?: T;
+  distanceKm?: T;
+  maxAltitude?: T;
+  difficulty?: T;
+  bestSeason?: T;
   summary?: T;
   highlights?:
     | T
@@ -315,7 +305,22 @@ export interface TreksSelect<T extends boolean = true> {
         value?: T;
         id?: T;
       };
+  itinerary?:
+    | T
+    | {
+        day?: T;
+        title?: T;
+        description?: T;
+        image?: T;
+        id?: T;
+      };
   included?:
+    | T
+    | {
+        item?: T;
+        id?: T;
+      };
+  excluded?:
     | T
     | {
         item?: T;
@@ -468,21 +473,17 @@ export interface TreksPage {
    */
   treks_page_heading?: string | null;
   /**
-   * Text displayed on the left button inside each trek card.
-   */
-  treks_card_left_button_text?: string | null;
-  /**
    * Text displayed on the right button inside each trek card.
    */
-  treks_card_right_button_text?: string | null;
+  treks_card_learn_more_button_text?: string | null;
   /**
-   * Background color for the left button (HEX code, RGB value, or valid CSS color name).
+   * Background color for the learn more button (HEX code, RGB value, or valid CSS color name).
    */
-  treks_card_left_button_color?: string | null;
+  treks_card_learn_more_button_color?: string | null;
   /**
-   * Background color for the right button (HEX code, RGB value, or valid CSS color name).
+   * Background color for the learn more button (HEX code, RGB value, or valid CSS color name).
    */
-  treks_card_right_button_color?: string | null;
+  treks_card_book_now_button_color: string;
   updatedAt?: string | null;
   createdAt?: string | null;
 }
@@ -578,6 +579,23 @@ export interface BookingSheet {
   createdAt?: string | null;
 }
 /**
+ * Text and colours for the big “Book” buttons, the duration badge, and the trip-highlight badges.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "trek_detail_settings".
+ */
+export interface TrekDetailSetting {
+  id: string;
+  hero_button_text?: string | null;
+  hero_button_color: string;
+  sticky_button_text?: string | null;
+  sticky_button_color: string;
+  duration_badge_color?: string | null;
+  highlight_badge_color?: string | null;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "header_select".
  */
@@ -615,10 +633,9 @@ export interface LandingPageSelect<T extends boolean = true> {
  */
 export interface TreksPageSelect<T extends boolean = true> {
   treks_page_heading?: T;
-  treks_card_left_button_text?: T;
-  treks_card_right_button_text?: T;
-  treks_card_left_button_color?: T;
-  treks_card_right_button_color?: T;
+  treks_card_learn_more_button_text?: T;
+  treks_card_learn_more_button_color?: T;
+  treks_card_book_now_button_color?: T;
   updatedAt?: T;
   createdAt?: T;
   globalType?: T;
@@ -696,6 +713,21 @@ export interface BookingSheetSelect<T extends boolean = true> {
         email_address?: T;
       };
   treks?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "trek_detail_settings_select".
+ */
+export interface TrekDetailSettingsSelect<T extends boolean = true> {
+  hero_button_text?: T;
+  hero_button_color?: T;
+  sticky_button_text?: T;
+  sticky_button_color?: T;
+  duration_badge_color?: T;
+  highlight_badge_color?: T;
   updatedAt?: T;
   createdAt?: T;
   globalType?: T;

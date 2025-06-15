@@ -181,6 +181,7 @@ const BookingSheetConfig: GlobalConfig = {
       required: true,
       defaultValue: async ({ req }) => {
         const all = await req.payload.find({ collection: 'treks', limit: 0 })
+
         return all.docs.map((d) => d.id)
       },
       admin: {

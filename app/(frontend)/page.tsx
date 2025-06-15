@@ -13,6 +13,7 @@ export default async function HomePage() {
       <HomeServer />
       <TrekServer />
       <AboutServer />
+
       <ContactServer />
     </main>
   )

@@ -1,185 +1,134 @@
-// src/collections/Treks.ts
-import type { CollectionConfig } from 'payload';
+import type { CollectionConfig } from 'payload'
+
+const dayLabel = ({ data }: { data?: any }): string => `Day ${data?.day ?? '?'}`
 
 const Treks: CollectionConfig = {
   slug: 'treks',
   labels: { singular: 'Trek', plural: 'Treks' },
+  access: { read: () => true },
 
   admin: {
     group: 'Treks Content',
     useAsTitle: 'name',
-    defaultColumns: ['name', 'durationDays', 'price.amount'],
+    defaultColumns: ['name', 'durationDays', 'price.amount', 'difficulty'],
   },
 
   fields: [
-    /* --------------------------------------------------------------
-     * BASIC INFO
-     * ------------------------------------------------------------ */
-    {
-      name: 'name',
-      type: 'text',
-      required: true,
-      admin: {
-        description: 'Full trek name shown on cards and detail pages.',
-      },
-    },
+    /* BASIC ------------------------------------------------------ */
+    { name: 'name', type: 'text', required: true },
     {
       name: 'slug',
-      label: 'URL Slug',
       type: 'text',
       required: true,
       unique: true,
-      admin: {
-        description:
-          'URL‑friendly slug. If left blank, it will be auto‑generated from the trek name.',
-      },
       hooks: {
-        // ✅ Return only the string value for this field
         beforeValidate: [
-          ({ value, data }) => {
-            const base = value || data?.name || '';
-            return base
+          ({ value, data }) =>
+            (value || data?.name || '')
               .toLowerCase()
               .trim()
-              .replace(/\s+/g, '-') // spaces → dashes
-              .replace(/[^a-z0-9-]/g, ''); // strip non‑URL chars
-          },
+              .replace(/\s+/g, '-')
+              .replace(/[^a-z0-9-]/g, ''),
         ],
       },
     },
 
-    /* --------------------------------------------------------------
-     * IMAGES
-     * ------------------------------------------------------------ */
+    /* IMAGES ----------------------------------------------------- */
     {
       name: 'heroImage',
-      label: 'Main Card Image',
       type: 'upload',
       relationTo: 'media',
       required: true,
-      admin: {
-        description:
-          'Primary cover photo (recommended ≥ 1 200 × 800 px). Displayed on the card and as the hero banner.',
-      },
     },
     {
       name: 'gallery',
-      label: 'Extra Photos',
       type: 'upload',
       relationTo: 'media',
       hasMany: true,
-      required: true,
-      admin: {
-        description:
-          'Drag‑and‑drop or select multiple images at once. No per‑image metadata.',
-      },
+      required: false,
     },
+    { name: 'video', type: 'text', required: false },
 
-    /* --------------------------------------------------------------
-     * PRICE
-     * ------------------------------------------------------------ */
+    /* PRICE ------------------------------------------------------ */
     {
       name: 'price',
-      label: 'Price',
       type: 'group',
       required: true,
-      admin: { description: 'Package cost in the selected currency.' },
       fields: [
-        {
-          name: 'amount',
-          label: 'Amount',
-          type: 'number',
-          min: 0,
-          required: true,
-          admin: {
-            placeholder: 'e.g. 185000',
-            description: 'Numeric price without commas or separators.',
-            width: '70%',
-          },
-        },
+        { name: 'amount', type: 'number', min: 0, required: true },
         {
           name: 'currency',
-          label: 'Currency',
           type: 'select',
           defaultValue: 'NPR',
           options: ['NPR', 'USD', 'EUR', 'GBP', 'INR', 'AUD', 'CAD'],
           required: true,
-          admin: {
-            description: 'ISO currency code.',
-            width: '30%',
-          },
         },
       ],
     },
 
-    /* --------------------------------------------------------------
-     * NUMERIC DETAILS
-     * ------------------------------------------------------------ */
+    /* QUICK FACTS ----------------------------------------------- */
+    { name: 'durationDays', type: 'number', min: 1, required: true },
+    { name: 'distanceKm', type: 'number', min: 0, required: false },
+    { name: 'maxAltitude', type: 'number', min: 0, required: false },
     {
-      name: 'durationDays',
-      label: 'Duration (Days)',
-      type: 'number',
-      min: 1,
-      required: true,
-      admin: {
-        description:
-          'Total trekking days (do not include arrival or departure buffer days).',
-      },
+      name: 'difficulty',
+      type: 'select',
+      options: ['Easy', 'Moderate', 'Challenging', 'Strenuous'],
+      required: false,
+    },
+    {
+      name: 'bestSeason',
+      type: 'select',
+      hasMany: true,
+      options: ['Spring', 'Summer', 'Autumn', 'Winter'],
+      required: false,
     },
 
-    /* --------------------------------------------------------------
-     * SUMMARY & HIGHLIGHTS
-     * ------------------------------------------------------------ */
-    {
-      name: 'summary',
-      type: 'textarea',
-      required: true,
-      admin: {
-        description:
-          'One‑paragraph teaser (≈ 150 characters). Shown in search results and used for SEO meta descriptions.',
-      },
-    },
+    /* SUMMARY & HIGHLIGHTS -------------------------------------- */
+    { name: 'summary', type: 'textarea', required: true },
     {
       name: 'highlights',
       type: 'array',
-      required: true,
       minRows: 1,
-      admin: {
-        description:
-          'Add up to three ultra‑short selling points (e.g. “12 d / 130 km”, “Sherpa culture”, “Hot springs”).',
-      },
+      maxRows: 6,
+      required: false,
+      fields: [{ name: 'value', type: 'text', required: true }],
+    },
+
+    /* ITINERARY -------------------------------------------------- */
+    {
+      name: 'itinerary',
+      type: 'array',
+      required: false,
+      admin: { components: { RowLabel: dayLabel as any } }, // ← key fix
       fields: [
+        { name: 'day', type: 'number', min: 1, required: true },
+        { name: 'title', type: 'text', required: true },
+        { name: 'description', type: 'textarea', required: true },
         {
-          name: 'value',
-          type: 'text',
-          required: true,
-          admin: { description: 'Single highlight phrase.' },
+          name: 'image',
+          type: 'upload',
+          relationTo: 'media',
+          required: false,
         },
       ],
     },
 
-    /* --------------------------------------------------------------
-     * WHAT’S INCLUDED
-     * ------------------------------------------------------------ */
+    /* INCLUDED / EXCLUDED --------------------------------------- */
     {
       name: 'included',
       type: 'array',
-      required: true,
       minRows: 1,
-      admin: {
-        description:
-          'Everything covered by the package price—enter one item per row (e.g. “Kathmandu–Lukla flights”).',
-      },
-      fields: [
-        {
-          name: 'item',
-          type: 'text',
-          required: true,
-          admin: { description: 'Inclusion detail.' },
-        },
-      ],
+      required: true,
+      fields: [{ name: 'item', type: 'text', required: true }],
+    },
+    {
+      name: 'excluded',
+      type: 'array',
+      required: false,
+      fields: [{ name: 'item', type: 'text', required: true }],
     },
   ],
-};
+}
 
-export default Treks;
+export default Treks

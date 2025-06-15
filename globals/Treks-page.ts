@@ -1,5 +1,5 @@
 // src/globals/TrekConfig.ts
-import type { GlobalConfig } from 'payload';
+import type { GlobalConfig } from 'payload'
 
 const TrekConfig: GlobalConfig = {
   slug: 'treks_page',
@@ -26,17 +26,10 @@ const TrekConfig: GlobalConfig = {
     /* --------------------------------------------------------------
      * CARD BUTTON TEXT
      * ------------------------------------------------------------ */
+
     {
-      name: 'treks_card_left_button_text',
-      label: 'Left Button Text',
-      type: 'text',
-      admin: {
-        description: 'Text displayed on the left button inside each trek card.',
-      },
-    },
-    {
-      name: 'treks_card_right_button_text',
-      label: 'Right Button Text',
+      name: 'treks_card_learn_more_button_text',
+      label: 'Learn More Button Text',
       type: 'text',
       admin: {
         description: 'Text displayed on the right button inside each trek card.',
@@ -46,25 +39,27 @@ const TrekConfig: GlobalConfig = {
     /* --------------------------------------------------------------
      * CARD BUTTON COLORS
      * ------------------------------------------------------------ */
+
     {
-      name: 'treks_card_left_button_color',
-      label: 'Left Button Color',
+      name: 'treks_card_learn_more_button_color',
+      label: 'Learn More Button Color',
       type: 'text',
       admin: {
         description:
-          'Background color for the left button (HEX code, RGB value, or valid CSS color name).',
+          'Background color for the learn more button (HEX code, RGB value, or valid CSS color name).',
       },
     },
     {
-      name: 'treks_card_right_button_color',
-      label: 'Right Button Color',
+      name: 'treks_card_book_now_button_color',
+      label: 'Book now Button Color',
       type: 'text',
+      required: true,
       admin: {
         description:
-          'Background color for the right button (HEX code, RGB value, or valid CSS color name).',
+          'Background color for the learn more button (HEX code, RGB value, or valid CSS color name).',
       },
     },
   ],
-};
+}
 
-export default TrekConfig;
+export default TrekConfig
