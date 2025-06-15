@@ -14,11 +14,15 @@ const FooterConfig: GlobalConfig = {
   fields: [
     /* LOGO -------------------------------------------------- */
     {
-      name: 'brand_name',
-      label: 'Brand / Logo Text',
-      type: 'text',
+      name: 'brand_logo',
+
+      label: 'Brand Logo ',
+      type: 'upload',
+      relationTo: 'media',
       required: true,
-      defaultValue: 'TrekSoulNepal',
+      admin: {
+        description: 'Upload the logo',
+      },
     },
 
     /* QUICK NAV -------------------------------------------- */

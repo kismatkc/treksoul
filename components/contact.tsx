@@ -14,7 +14,6 @@ interface Props {
 export default function FooterClient({ footerData }: Props) {
   const {
     /* unchanged props --------------------------------------------------- */
-    brand_name = 'TrekSoulNepal',
     quick_links = [],
     social = {},
     accent_color = '#047857',
@@ -81,14 +80,19 @@ export default function FooterClient({ footerData }: Props) {
               </div>
             </div>
           )}
-          {/* word-mark */}
+
           <Link
             href="#home"
             aria-label="Home"
-            className="block text-center text-2xl font-black tracking-tight"
-            style={{ color: 'var(--accent-color)' }}
+            className="flex text-center text-2xl font-black tracking-tight text-emerald-700 justify-center"
           >
-            {brand_name}
+            <Image
+              src={(footerData.brand_logo as any).url}
+              alt="Treksoul Nepal"
+              width={60}
+              height={60}
+              className="size-[90px] md:size-[110px] "
+            />
           </Link>
           {/* quick nav */}
           {quick_links && quick_links?.length > 0 && (

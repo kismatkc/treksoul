@@ -1,6 +1,6 @@
 'use client'
 import { Button } from '@/components/ui/button'
-import { BookingSheet, Header } from '@/payload-types'
+import { BookingSheet, Header, Media } from '@/payload-types'
 import Link from 'next/link'
 
 import {
@@ -17,6 +17,7 @@ import { useSectionObserver } from '@/hooks/useSection'
 import { CSSProperties } from 'react'
 import { cn } from '@/lib/utils'
 import BookNowSheet from './book-sheet'
+import Image from 'next/image'
 
 export function MobileMenu({
   headerData,
@@ -30,15 +31,22 @@ export function MobileMenu({
   )
 
   return (
-    <header className="fixed top-0 z-50 w-full">
+    <header className="fixed top-0 z-50 w-full inset-x-0 bg-white shadow-md">
       <Sheet>
-        <div className="flex justify-between p-3 pr-4">
+        <div className="flex justify-between  px-4">
           <Link
             href="#home"
             aria-label="Home"
             className="block text-center text-2xl font-black tracking-tight text-emerald-700"
           >
-            TrekSoulNepal
+            <Image
+              src={(headerData.logo as any).url}
+              alt="Treksoul Nepal"
+              width={60}
+              height={60}
+              className="size-[80px] md:size-[100px] "
+              priority={true}
+            />
           </Link>
           <div className="flex gap-x-3 items-center">
             <BookNowSheet
@@ -56,20 +64,24 @@ export function MobileMenu({
           <SheetHeader>
             <div className="flex justify-between ">
               <Link
-                href="/"
+                href="#home"
                 aria-label="Home"
                 className="block text-center text-2xl font-black tracking-tight text-emerald-700"
               >
-                TrekSoulNepal
+                <Image
+                  src={(headerData.logo as any).url}
+                  alt="Treksoul Nepal"
+                  width={60}
+                  height={60}
+                  className="size-[80px] md:size-[100px] "
+                  priority={true}
+                />
               </Link>
-
               <div className="flex gap-x-3 items-center">
-                <Button
-                  style={{ backgroundColor: headerData.Book_now_button_color }}
-                  className="p-3 cursor-pointer font-semibold"
-                >
-                  {headerData.Book_now_button_text}
-                </Button>
+                <BookNowSheet
+                  bookData={bookData}
+                  bookNowButtonColor={headerData.Book_now_button_color}
+                />
                 <SheetClose asChild>
                   <XIcon className=" cursor-pointer " strokeWidth={3} width={25} height={25} />
                 </SheetClose>
@@ -111,3 +123,34 @@ export function MobileMenu({
     </header>
   )
 }
+
+// export default function SiteHeader() {
+//   return (
+//     <header
+//       className="
+//         fixed inset-x-0 top-0 z-50          /* stay on top of everything */
+//         h-16 md:h-20                        /* ← pick the height you want */
+//         flex items-center
+//         bg-white/90 dark:bg-zinc-900/80     /* translucent backdrop */
+//         backdrop-blur-md backdrop-saturate-150
+//         shadow-sm                           /* subtle shadow so it never “blends in” */
+//         px-4 md:px-8
+//       "
+//     >
+//       {/* ⬇ your row */}
+//       <div className="flex w-full items-center justify-between gap-4">
+//         <span className="text-2xl font-extrabold text-primary">TrekSoulNepal</span>
+
+//         <button className="hidden lg:block btn-primary">Book now</button>
+
+//         {/* hamburger for small screens */}
+//         <button className="lg:hidden">
+//           <span className="sr-only">Open menu</span>
+//           <svg className="h-6 w-6" viewBox="0 0 24 24" fill="currentColor">
+//             <path d="M4 6h16M4 12h16M4 18h16" />
+//           </svg>
+//         </button>
+//       </div>
+//     </header>
+//   )
+// }

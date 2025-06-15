@@ -1,8 +1,6 @@
 'use client'
 
 import Image from 'next/image'
-import { Input } from '@/components/ui/input' // shadcn/ui input
-import { Search } from 'lucide-react' // lucide‑react icon
 import { FormEvent } from 'react'
 import { LandingPage } from '@/payload-types'
 import TrekSearch from './trek-search'
@@ -28,7 +26,7 @@ export default function Hero({ landingPageData }: { landingPageData: LandingPage
           alt="Clouds over mountains"
           fill
           className="object-cover select-none "
-          priority
+          priority={true}
           style={{
             backgroundImage: 'url(/blur.jpg)',
             backgroundSize: 'cover',

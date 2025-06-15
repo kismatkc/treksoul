@@ -527,7 +527,10 @@ export interface AboutUs {
  */
 export interface Footer {
   id: string;
-  brand_name: string;
+  /**
+   * Upload the logo
+   */
+  brand_logo: string | Media;
   quick_links?:
     | {
         label: string;
@@ -669,7 +672,7 @@ export interface AboutUsSelect<T extends boolean = true> {
  * via the `definition` "footer_select".
  */
 export interface FooterSelect<T extends boolean = true> {
-  brand_name?: T;
+  brand_logo?: T;
   quick_links?:
     | T
     | {
